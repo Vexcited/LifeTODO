@@ -1,0 +1,1 @@
+export const error = (message: string, status: number) => new Response(message, { status });
