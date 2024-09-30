@@ -34,3 +34,22 @@ export const readSignedUsername = (request: Request): string => {
   // and we're using the same token to read the checked username.
   return payload.username;
 }
+
+export const readUserToken = (request: Request): UserToken => {
+  const token = readBearer(request);
+  if (!token) {
+    throw error("user token is not provided.", 400);
+  }
+
+  const payload = verify(token);
+  if (!payload) {
+    throw error("user token is invalid.", 400);
+  }
+
+  return payload as UserToken;
+}
+
+export interface UserToken {
+  id: string
+  username: string
+}
