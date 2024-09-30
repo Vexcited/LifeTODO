@@ -5,13 +5,23 @@ import "virtual:uno.css";
 
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
+import { createEffect, type FlowComponent, on, onMount, Suspense } from "solid-js";
+import auth from "./stores/auth";
+
+const Layout: FlowComponent = (props) => {
+  createEffect(on(() => auth.token, () => auth.checkToken()));
+  return props.children;
+}
 
 export default function App() {
   return (
     <Router
       root={(props) => (
-        <Suspense>{props.children}</Suspense>
+        <Layout>
+          <Suspense>
+            {props.children}
+          </Suspense>
+        </Layout>
       )}
     >
       <FileRoutes />

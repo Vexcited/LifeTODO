@@ -2,6 +2,7 @@ import { Match, Show, Switch } from "solid-js";
 import { createStore } from "solid-js/store";
 import { A, useNavigate } from "@solidjs/router";
 import ky, { HTTPError } from "ky";
+import auth from "~/stores/auth";
 
 import { TextField } from "@kobalte/core/text-field";
 
@@ -84,7 +85,7 @@ export default function Auth () {
         }
       }).json<SignupResponse>();
 
-      localStorage.setItem("token", response.token);
+      auth.preserveToken(response.token);
       navigate("/");
     } catch (e) {
       if (e instanceof HTTPError) {
@@ -108,7 +109,7 @@ export default function Auth () {
         }
       }).json<SignupResponse>();
 
-      localStorage.setItem("token", response.token);
+      auth.preserveToken(response.token);
       navigate("/");
     } catch (e) {
       if (e instanceof HTTPError) {
