@@ -1,20 +1,8 @@
 import { A } from "@solidjs/router";
-import { Show } from "solid-js";
+import { For, Show } from "solid-js";
 import auth from "~/stores/auth";
-
-const Item = () => {
-
-  return (
-    <div class="border border-[#27272a] divide-y divide-[#27272a] rounded-md">
-      <div class="flex px-6 py-2">
-        <h2>a pdf dumper (no name yet)</h2>
-      </div>
-      <div class="px-6 py-4">
-        <p>i should rewrite the thing for my repo EDT-IUT-Info, to prevent having ugly eval() in the pdf.js import</p>
-      </div>
-    </div>
-  )
-}
+import topics from "~/stores/topics";
+import TopicItem from "~/components/TopicItem";
 
 export default function Home() {
   return (
@@ -51,15 +39,25 @@ export default function Home() {
         </div>
 
         <Show when={auth.user?.writer}>
-          <button type="button"
+          <button
+            type="button"
             class="border-[#fafafa] border border-dashed hover:bg-[#fafafa]/10 text-[#fafafa] rounded-md text-sm font-medium transition-colors focus-visible:outline-none px-4 py-4"
+            onClick={() => topics.create()}
           >
             add new item
           </button>
         </Show>
 
-        <div class="flex flex-col">
-          <Item />
+        <div class="flex flex-col gap-6">
+          <For each={topics.items}
+            fallback={
+              <p>Nothing for now !</p>
+            }
+          >
+            {topic => (
+              <TopicItem topic={topic} />
+            )}
+          </For>
         </div>
       </main>
     </main>
