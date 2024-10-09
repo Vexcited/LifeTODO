@@ -1,9 +1,10 @@
-import { type Component, createEffect, createSignal, Show } from "solid-js";
+import { type JSX, type Component, createSignal, Show } from "solid-js";
 import { createStore } from "solid-js/store";
-import topics, { type Topic } from "~/stores/topics";
+import auth from "~/stores/auth";
+import topics, { type LocalTopic } from "~/stores/topics";
 
 const TopicItem: Component<{
-  topic: Topic
+  topic: LocalTopic
 }> = (props) => {
   const [editing, setEditing] = createSignal(false);
   const [editingValues, setEditingValues] = createStore(props.topic);
@@ -26,12 +27,32 @@ const TopicItem: Component<{
     setEditing(true);
   }
 
+  const toggleTodoCheckboxHandler: JSX.ChangeEventHandler<HTMLInputElement, Event> = async (event) => {
+    event.preventDefault();
+
+    // if not allowed to update, rollback the UI checkbox
+    if (!auth.user?.writer) {
+      event.currentTarget.checked = props.topic.done;
+      return;
+    }
+
+    // toggle the property
+    const topic = { ...props.topic, done: !props.topic.done };
+    await topics.mutate(topic);
+  }
+
   return (
     <div class="border border-[#27272a] divide-y divide-[#27272a] rounded-md">
       <div class="flex items-center gap-4 px-6 py-2">
+        <input
+          type="checkbox"
+          checked={props.topic.done}
+          onChange={toggleTodoCheckboxHandler}
+        />
+
         <Show when={editing()} fallback={
           <h2>
-            {props.topic.title || "no title"} 
+            {props.topic.title || "no title"}
           </h2>
         }>
           <input
@@ -41,18 +62,20 @@ const TopicItem: Component<{
             onInput={(e) => setEditingValues("title", e.currentTarget.value)}
           />
         </Show>
-        
+
         <p class="text-xs text-white/50 flex-shrink-0">
-          since the {props.topic.createdAt.toLocaleDateString()}
+          since the {props.topic.createdAt.toLocaleString()}
         </p>
 
-        <button
-          type="button"
-          class="ml-auto"
-          onClick={() => toggleEditing()}
-        >
-          {editing() ? "save" : "edit"}
-        </button>
+        <Show when={auth.user?.writer}>
+          <button
+            type="button"
+            class="ml-auto"
+            onClick={() => toggleEditing()}
+          >
+            {editing() ? "save" : "edit"}
+          </button>
+        </Show>
       </div>
 
       <div class="px-6 py-4">
@@ -68,6 +91,13 @@ const TopicItem: Component<{
             onInput={(e) => setEditingValues("description", e.currentTarget.value)}
           />
         </Show>
+      </div>
+
+      <div>
+
+        {/* <For each={props.topic.items} fallback={<p>No items !</p>}>
+
+        </For> */}
       </div>
     </div>
   );
