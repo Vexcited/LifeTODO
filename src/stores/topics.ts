@@ -21,18 +21,15 @@ type LocalTopicRaw = Omit<LocalTopic, "createdAt" | "updatedAt"> & {
 export default createRoot(() => {
   const [topics, setTopics] = createSignal<LocalTopic[]>([]);
 
-  const move = async (from_topic: LocalTopic, to_order: number) => {
-    const from_order = from_topic.order;
+  const move = async (from_id: string, to_id: string) => {
+    const from = topics().find(t => t.id === from_id);
+    if (!from) throw new Error("from_topic not found");
 
-    const to_topic = topics().find(t => t.order === to_order);
-    if (!to_topic) throw new Error("to_topic not found");
+    const to = topics().find(t => t.id === to_id);
+    if (!to) throw new Error("to_topic not found");
 
-    // mutate server state
-    await mutate({ ...from_topic, order: to_order });
-    await mutate({ ...to_topic, order: from_order });
-
-    // update local state
-    await refresh();
+    await mutate({ ...from, order: to.order }, false);
+    await mutate({ ...to, order: from.order });
   };
 
   const create = async (parent?: string): Promise<void> => {
@@ -43,12 +40,13 @@ export default createRoot(() => {
     await refresh();
   }
 
-  const mutate = async (topic: LocalTopic): Promise<void> => {
+  const mutate = async (topic: LocalTopic, doRefresh = true): Promise<void> => {
     await auth.ky().put("/api/topics", {
       json: topic
     });
 
-    await refresh();
+    if (doRefresh)
+      await refresh();
   }
 
   const refresh = async (): Promise<void> => {
@@ -58,7 +56,7 @@ export default createRoot(() => {
       ...t,
       createdAt: new Date(t.createdAt),
       updatedAt: new Date(t.updatedAt)
-    }));
+    })).sort((a, b) => a.order - b.order);
 
     setTopics(topics);
   };

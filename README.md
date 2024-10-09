@@ -26,9 +26,9 @@ Most of these features are only available to writers.
 - [x] Create
 - [x] Mark as done
 - [x] Edit title and description and save
-- [ ] Move around
+- [x] Move around
   - [x] State mutation
-  - [ ] UI drag and drop
+  - [x] UI drag and drop
 
 ### Social
 
