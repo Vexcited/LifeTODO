@@ -49,6 +49,7 @@ const TopicItem: Component<{
           type="checkbox"
           checked={props.topic.done}
           onChange={toggleTodoCheckboxHandler}
+          disabled={!auth.user?.writer}
         />
 
         <Show when={editing()} fallback={
