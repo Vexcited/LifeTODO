@@ -12,13 +12,13 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.7",
     "@solidjs/start": "^1.0.8",
-    "@unocss/reset": "^0.63.1",
+    "@unocss/reset": "^0.63.4",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
     "ky": "^1.7.2",
     "mongoose": "^8.7.0",
     "solid-js": "^1.9.1",
-    "unocss": "^0.63.1",
+    "unocss": "^0.63.4",
     "vinxi": "^0.4.3"
   },
   "engines": {
