@@ -41,6 +41,25 @@ export default function Account () {
 
     // will refetch user metadata from database and update state.
     await auth.checkToken();
+  };
+
+  const handlePasswordUpdate = async (event: SubmitEvent) => {
+    event.preventDefault();
+
+    if (state.newPassword !== state.confirmNewPassword) {
+      alert("passwords do not match, please check again");
+      return;
+    }
+
+    await auth.ky().post("/api/account/password", {
+      json: {
+        currentPassword: state.currentPassword,
+        newPassword: state.newPassword,
+      }
+    });
+
+    // will ask user to re-login
+    auth.logout(); // will redirect to /auth because of the effect in this component
   }
 
   return (
@@ -67,6 +86,47 @@ export default function Account () {
             <TextField.Input class="w-full bg-dark-4 px-4 py-2 rounded-md border-dark-1 border outline-none"
               placeholder={auth.user?.displayName || auth.user?.username}
             />
+          </TextField>
+
+          <button type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded w-fit"
+          >
+            Save
+          </button>
+        </form>
+
+        <form class="flex flex-col gap-4 max-w-[400px] w-full"
+          onSubmit={handlePasswordUpdate}
+        >
+          <TextField
+            class="flex flex-col gap-1 flex-items-start"
+            value={getTextValue("currentPassword")}
+            onChange={setTextValue("currentPassword")}
+          >
+            <TextField.Label class="text-light/80">
+              current password
+            </TextField.Label>
+            <TextField.Input type="password" class="w-full bg-dark-4 px-4 py-2 rounded-md border-dark-1 border outline-none" autocomplete="off" />
+          </TextField>
+          <TextField
+            class="flex flex-col gap-1 flex-items-start"
+            value={getTextValue("newPassword")}
+            onChange={setTextValue("newPassword")}
+          >
+            <TextField.Label class="text-light/80">
+              new password
+            </TextField.Label>
+            <TextField.Input type="password" class="w-full bg-dark-4 px-4 py-2 rounded-md border-dark-1 border outline-none" autocomplete="off" />
+          </TextField>
+          <TextField
+            class="flex flex-col gap-1 flex-items-start"
+            value={getTextValue("confirmNewPassword")}
+            onChange={setTextValue("confirmNewPassword")}
+          >
+            <TextField.Label class="text-light/80">
+              confirm new password
+            </TextField.Label>
+            <TextField.Input type="password" class="w-full bg-dark-4 px-4 py-2 rounded-md border-dark-1 border outline-none" autocomplete="off" />
           </TextField>
 
           <button type="submit"

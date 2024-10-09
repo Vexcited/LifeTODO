@@ -55,7 +55,7 @@ export interface UserToken {
   username: string
 }
 
-export const readUser = async (request: Request) => {
+export const readUser = async (request: Request, withPassword = false) => {
   const payload = readUserToken(request);
   await connectDatabase();
 
@@ -69,6 +69,7 @@ export const readUser = async (request: Request) => {
     id: user.id as string,
     username: user.username,
     displayName: user.displayName || "",
-    writer: user.writer
+    writer: user.writer,
+    password: withPassword ? user.password : void 0
   };
 };
