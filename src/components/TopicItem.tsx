@@ -2,6 +2,7 @@ import { type JSX, type Component, createSignal, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import auth from "~/stores/auth";
 import topics, { type LocalTopic } from "~/stores/topics";
+import Markdown from "./Markdown";
 
 const TopicItem: Component<{
   topic: LocalTopic
@@ -80,9 +81,7 @@ const TopicItem: Component<{
 
       <div class="px-6 py-4">
         <Show when={editing()} fallback={
-          <p>
-            {props.topic.description || "no description"}
-          </p>
+          <Markdown raw={props.topic.description || "no description"} />
         }>
           <textarea
             class="bg-dark-4 px-4 py-2 w-full rounded-md border-dark-1 border outline-none"
@@ -91,13 +90,6 @@ const TopicItem: Component<{
             onInput={(e) => setEditingValues("description", e.currentTarget.value)}
           />
         </Show>
-      </div>
-
-      <div>
-
-        {/* <For each={props.topic.items} fallback={<p>No items !</p>}>
-
-        </For> */}
       </div>
     </div>
   );

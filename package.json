@@ -17,7 +17,13 @@
     "jsonwebtoken": "^9.0.2",
     "ky": "^1.7.2",
     "mongoose": "^8.7.0",
+    "rehype-raw": "^7.0.0",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.1",
     "solid-js": "^1.9.1",
+    "unified": "^11.0.5",
     "unocss": "^0.63.4",
     "vinxi": "^0.4.3"
   },
