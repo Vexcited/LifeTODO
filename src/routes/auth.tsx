@@ -8,6 +8,7 @@ import { TextField } from "@kobalte/core/text-field";
 
 import type { CheckAuthResponse } from "./api/check-auth";
 import type { SignupResponse } from "./api/signup";
+import { Title } from "@solidjs/meta";
 
 enum AuthStep {
   Initial,
@@ -20,7 +21,7 @@ export default function Auth () {
 
   const [state, setState] = createStore({
     step: AuthStep.Initial,
-    
+
     username: "",
     signedUsername: "",
 
@@ -121,6 +122,7 @@ export default function Auth () {
 
   return (
     <div class="flex flex-col items-center justify-center h-screen px-6">
+      <Title>Authenticate - LifeTODO</Title>
       <main class="max-w-[420px] w-full text-center flex flex-col gap-6">
         <h1 class="text-2xl font-700">
           authenticate
