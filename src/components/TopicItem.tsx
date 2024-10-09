@@ -63,8 +63,8 @@ const TopicItem: Component<{
           />
         </Show>
 
-        <p class="text-xs text-white/50 flex-shrink-0">
-          since the {props.topic.createdAt.toLocaleString()}
+        <p class="text-xs text-white/50 flex-shrink-0" title={`created since ${props.topic.createdAt.toLocaleString()}`}>
+          last updated the {props.topic.updatedAt.toLocaleString()}
         </p>
 
         <Show when={auth.user?.writer}>
