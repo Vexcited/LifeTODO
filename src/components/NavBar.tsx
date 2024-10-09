@@ -4,7 +4,7 @@ import auth from "~/stores/auth";
 
 const NavBar: Component = () => {
   return (
-    <nav class="flex gap-6 h-14 container px-6 mx-auto items-center">
+    <nav class="flex gap-6 h-14 container px-6 mx-auto items-center border-b border-white/10 bg-[#09090b]">
       <A href="/">
         LifeTODO
       </A>
@@ -16,16 +16,16 @@ const NavBar: Component = () => {
           }>
             {user => (
               <>
-                <p>
+                <p class="text-white/50 text-sm">
                   Welcome, {user().displayName || user().username}!
                 </p>
 
-                <A class="ml-auto" href="/account">
+                <A class="ml-auto text-white/80 focus:text-white hover:text-white transition-colors" href="/account">
                   Account
                 </A>
 
                 <Show when={auth.user?.writer}>
-                  <A href="/admin">
+                  <A href="/admin" class="text-white/80 focus:text-white hover:text-white transition-colors">
                     Admin
                   </A>
                 </Show>
@@ -40,7 +40,7 @@ const NavBar: Component = () => {
           </Show>
         }
       >
-        <A href="/auth">Authenticate</A>
+        <A class="ml-auto text-white/80 focus:text-white hover:text-white transition-colors" href="/auth">Authenticate</A>
       </Show>
     </nav>
   )
