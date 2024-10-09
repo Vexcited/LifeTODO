@@ -7,10 +7,16 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { createEffect, type FlowComponent, on, onMount, Suspense } from "solid-js";
 import auth from "./stores/auth";
+import { MetaProvider } from "@solidjs/meta";
 
 const Layout: FlowComponent = (props) => {
   createEffect(on(() => auth.token, () => auth.checkToken()));
-  return props.children;
+
+  return (
+    <MetaProvider>
+      {props.children}
+    </MetaProvider>
+  );
 }
 
 export default function App() {
