@@ -2,6 +2,7 @@ import { User } from "~/database/User";
 import { readBearer } from "./bearer";
 import { error } from "./error";
 import { verify } from "./jwt";
+import { connectDatabase } from "./database";
 
 export const checkSignupRights = async () => {
   const amountOfUsers = await User.countDocuments();
@@ -53,3 +54,21 @@ export interface UserToken {
   id: string
   username: string
 }
+
+export const readUser = async (request: Request) => {
+  const payload = readUserToken(request);
+  await connectDatabase();
+
+  const user = await User.findById(payload.id);
+
+  if (!user) {
+    throw error("user not found.", 404);
+  }
+
+  return {
+    id: user.id as string,
+    username: user.username,
+    displayName: user.displayName || "",
+    writer: user.writer
+  };
+};
