@@ -1,7 +1,6 @@
 import type { APIEvent } from "@solidjs/start/server";
-import { connectDatabase } from "~/server/database";
-import { User } from "~/database/User";
-import { readUserToken } from "~/server/auth";
+import { readUser } from "~/server/auth";
+import { handleError } from "~/server/error";
 
 export type UserResponse = {
   id: string
@@ -10,20 +9,11 @@ export type UserResponse = {
   writer: boolean
 }
 
-export async function GET ({ request }: APIEvent) {
-  const payload = readUserToken(request);
-  await connectDatabase();
-
-  const user = await User.findById(payload.id);
-  
-  if (!user) {
-    return new Response("user not found.", { status: 404 });
+export async function GET({ request }: APIEvent) {
+  try {
+    return readUser(request);
   }
-
-  return {
-    id: user.id,
-    username: user.username,
-    displayName: user.displayName || "",
-    writer: user.writer
-  };
+  catch (e) {
+    handleError(e);
+  }
 }
