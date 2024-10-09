@@ -43,5 +43,5 @@ Most of these features are only available to writers.
 ### Account
 
 - [x] Change display name
-- [ ] Change password
+- [x] Change password
 - [ ] Delete account
