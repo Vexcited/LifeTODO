@@ -12,7 +12,6 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.7",
     "@solidjs/start": "^1.0.8",
-    "@thisbeyond/solid-dnd": "^0.7.5",
     "@unocss/reset": "^0.63.4",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.2",
@@ -24,6 +23,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
     "solid-js": "^1.9.1",
+    "sortablejs": "^1.15.3",
     "unified": "^11.0.5",
     "unocss": "^0.63.4",
     "vinxi": "^0.4.3"
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/sortablejs": "^1.15.8"
   }
 }

@@ -23,9 +23,6 @@ importers:
       '@solidjs/start':
         specifier: ^1.0.8
         version: 1.0.8(solid-js@1.9.1)(vinxi@0.4.3(@types/node@22.7.4)(ioredis@5.4.1)(terser@5.34.1))(vite@5.4.8(@types/node@22.7.4)(terser@5.34.1))
-      '@thisbeyond/solid-dnd':
-        specifier: ^0.7.5
-        version: 0.7.5(solid-js@1.9.1)
       '@unocss/reset':
         specifier: ^0.63.4
         version: 0.63.4
@@ -59,6 +56,9 @@ importers:
       solid-js:
         specifier: ^1.9.1
         version: 1.9.1
+      sortablejs:
+        specifier: ^1.15.3
+        version: 1.15.3
       unified:
         specifier: ^11.0.5
         version: 11.0.5
@@ -75,6 +75,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.7
         version: 9.0.7
+      '@types/sortablejs':
+        specifier: ^1.15.8
+        version: 1.15.8
 
 packages:
 
@@ -1044,12 +1047,6 @@ packages:
   '@swc/helpers@0.5.13':
     resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
 
-  '@thisbeyond/solid-dnd@0.7.5':
-    resolution: {integrity: sha512-DfI5ff+yYGpK9M21LhYwIPlbP2msKxN2ARwuu6GF8tT1GgNVDTI8VCQvH4TJFoVApP9d44izmAcTh/iTCH2UUw==}
-    engines: {node: '>=18.0.0', pnpm: '>=8.6.0'}
-    peerDependencies:
-      solid-js: ^1.5
-
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -1097,6 +1094,9 @@ packages:
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
+
+  '@types/sortablejs@1.15.8':
+    resolution: {integrity: sha512-b79830lW+RZfwaztgs1aVPgbasJ8e7AXtZYHTELNXZPsERt4ymJdjV4OccDbHQAvHrCcFpbF78jkm0R6h/pZVg==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -2928,6 +2928,9 @@ packages:
     peerDependencies:
       solid-js: ^1.7
 
+  sortablejs@1.15.3:
+    resolution: {integrity: sha512-zdK3/kwwAK1cJgy1rwl1YtNTbRmc8qW/+vgXf75A7NHag5of4pyI6uK86ktmQETyWRH7IGaE73uZOOBcGxgqZg==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -4222,10 +4225,6 @@ snapshots:
     dependencies:
       tslib: 2.7.0
 
-  '@thisbeyond/solid-dnd@0.7.5(solid-js@1.9.1)':
-    dependencies:
-      solid-js: 1.9.1
-
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.25.6
@@ -4284,6 +4283,8 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/resolve@1.20.2': {}
+
+  '@types/sortablejs@1.15.8': {}
 
   '@types/unist@3.0.3': {}
 
@@ -6595,6 +6596,8 @@ snapshots:
   solid-use@0.9.0(solid-js@1.9.1):
     dependencies:
       solid-js: 1.9.1
+
+  sortablejs@1.15.3: {}
 
   source-map-js@1.2.1: {}
 

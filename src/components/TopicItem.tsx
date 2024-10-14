@@ -3,14 +3,11 @@ import { createStore } from "solid-js/store";
 import auth from "~/stores/auth";
 import topics, { type LocalTopic } from "~/stores/topics";
 import Markdown from "./Markdown";
-import { createSortable, transformStyle, useDragDropContext } from "@thisbeyond/solid-dnd";
 
 const TopicItem: Component<{
   topic: LocalTopic
+  index: number
 }> = (props) => {
-  const sortable = createSortable(props.topic.id);
-  const [dragState] = useDragDropContext()!;
-
   const [editing, setEditing] = createSignal(false);
   const [editingValues, setEditingValues] = createStore(props.topic);
 
@@ -47,21 +44,11 @@ const TopicItem: Component<{
   }
 
   return (
-    <div
-      ref={sortable.ref}
-      style={transformStyle(sortable.transform)}
-
-      classList={{
-        "opacity-25": sortable.isActiveDraggable,
-        "transition-transform": !!dragState.active.draggable,
-      }}
-    >
+    <div data-id={props.topic.id} class="my-4">
       <div class="border border-[#27272a] divide-y divide-[#27272a] rounded-md">
         <div class="flex items-center gap-4 px-6 py-2">
           <Show when={auth.user?.writer}>
-            <div
-              {...sortable.dragActivators}
-            >
+            <div class="__topic-handle">
               MOVE
             </div>
           </Show>
@@ -101,7 +88,7 @@ const TopicItem: Component<{
           </Show>
         </div>
 
-        <div class="px-6 py-4">
+        <div class="px-6 py-4 overflow-x-auto">
           <Show when={editing()} fallback={
             <Markdown raw={props.topic.description || "no description"} />
           }>

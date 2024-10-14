@@ -21,17 +21,6 @@ type LocalTopicRaw = Omit<LocalTopic, "createdAt" | "updatedAt"> & {
 export default createRoot(() => {
   const [topics, setTopics] = createSignal<LocalTopic[]>([]);
 
-  const move = async (from_id: string, to_id: string) => {
-    const from = topics().find(t => t.id === from_id);
-    if (!from) throw new Error("from_topic not found");
-
-    const to = topics().find(t => t.id === to_id);
-    if (!to) throw new Error("to_topic not found");
-
-    await mutate({ ...from, order: to.order }, false);
-    await mutate({ ...to, order: from.order });
-  };
-
   const create = async (parent?: string): Promise<void> => {
     await auth.ky().post("/api/topics", {
       json: { parent }
@@ -70,7 +59,6 @@ export default createRoot(() => {
       return topics();
     },
 
-    move,
     mutate,
     create,
     refresh
