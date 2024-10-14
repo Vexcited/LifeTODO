@@ -62,7 +62,7 @@ const TopicItem: Component<{
 
           <Show when={editing()} fallback={
             <h2>
-              {props.topic.title || "no title"}
+              {props.index}. {props.topic.title || "no title"}
             </h2>
           }>
             <input
