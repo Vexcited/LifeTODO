@@ -8,7 +8,6 @@ import type { Document } from "mongoose";
 const toJSON = (topic: Document<unknown, {}, Topic> & Topic) => ({
   id: topic.id,
   done: topic.done,
-  order: topic.order,
   title: topic.title || "",
   description: topic.description || "",
   parent: topic.parent || null,
@@ -68,7 +67,6 @@ export async function PUT({ request }: APIEvent) {
 
     const topic: Partial<Topic> = {
       updatedAt: new Date(),
-      order: body.order,
       title: body.title,
       description: body.description,
       parent: body.parent || null,

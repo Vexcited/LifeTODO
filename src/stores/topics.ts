@@ -45,7 +45,7 @@ export default createRoot(() => {
       ...t,
       createdAt: new Date(t.createdAt),
       updatedAt: new Date(t.updatedAt)
-    })).sort((a, b) => a.order - b.order);
+    }));
 
     setTopics(topics);
   };
