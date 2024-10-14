@@ -1,6 +1,6 @@
 import topics from "~/stores/topics";
 import orders from "~/stores/orders";
-import { type Component, createMemo, For, Index, onCleanup, onMount } from "solid-js";
+import { type Component, createEffect, createMemo, For, Index, on, onCleanup, onMount } from "solid-js";
 import Sortable from 'sortablejs';
 import TopicItem from "./TopicItem";
 
@@ -43,6 +43,12 @@ const UnorderedTopics: Component = () => {
         }
       }
     });
+
+    createEffect(on(unordered, (new_order) => {
+      queueMicrotask(() => {
+        sortable.sort(new_order.map(t => t.id));
+      });
+    }))
 
     onCleanup(() => {
       sortable.destroy();
