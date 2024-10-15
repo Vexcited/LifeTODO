@@ -4,6 +4,7 @@ import { readUser } from "~/server/auth";
 import { connectDatabase } from "~/server/database";
 import { error, handleError } from "~/server/error";
 import type { Document } from "mongoose";
+import { Order } from "~/database/Order";
 
 const toJSON = (topic: Document<unknown, {}, Topic> & Topic) => ({
   id: topic.id,
@@ -95,6 +96,17 @@ export async function DELETE({ request }: APIEvent) {
     }
 
     await Topic.findByIdAndDelete(body.id);
+
+    const order = await Order.findOne({
+      elements: body.id
+    });
+
+    if (order) {
+      const updatedElements = order?.elements.filter(e => e.toHexString() !== body.id);
+      await Order.findByIdAndUpdate(order?.id, {
+        elements: updatedElements
+      });
+    }
 
     return { success: true };
   }

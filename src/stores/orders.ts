@@ -28,8 +28,6 @@ export default createRoot(() => {
     await refresh();
   }
 
-  createEffect(() => console.log(orders.root.length));
-
   const refresh = async () => {
     const orders = await ky.get("/api/orders").json<Record<string, string[]>>();
     setOrders(orders);
