@@ -81,3 +81,24 @@ export async function PUT({ request }: APIEvent) {
     return handleError(e);
   }
 }
+
+export async function DELETE({ request }: APIEvent) {
+  try {
+    const user = await readUser(request);
+
+    if (!user.writer) {
+      return error("user is not a writer.", 403);
+    }
+
+    const body = await request.json() as {
+      id: string
+    }
+
+    await Topic.findByIdAndDelete(body.id);
+
+    return { success: true };
+  }
+  catch (e) {
+    return handleError(e);
+  }
+}

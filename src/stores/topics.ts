@@ -50,6 +50,14 @@ export default createRoot(() => {
     setTopics(topics);
   };
 
+  const remove = async (id: string): Promise<void> => {
+    await auth.ky().delete("/api/topics", {
+      json: { id }
+    });
+
+    await refresh();
+  }
+
   onMount(() => {
     refresh();
   });
@@ -59,6 +67,7 @@ export default createRoot(() => {
       return topics();
     },
 
+    remove,
     mutate,
     create,
     refresh

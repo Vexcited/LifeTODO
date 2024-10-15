@@ -81,6 +81,13 @@ const TopicItem: Component<{
             <button
               type="button"
               class="ml-auto"
+              onClick={() => topics.remove(props.topic.id)}
+            >
+              delete
+            </button>
+
+            <button
+              type="button"
               onClick={() => toggleEditing()}
             >
               {editing() ? "save" : "edit"}
